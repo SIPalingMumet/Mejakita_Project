@@ -31,7 +31,7 @@ void main() async {
     //   '/homepage': (context) => HomePage(),
       '/dashboard':(context) => Dashboard(),
     //   '/login':(context) => Login(),
-    //   '/signup':(context) => Signup(),
+      '/signup':(context) => Signup(),
     //   '/forgot':(context) => ForgotPage(),
     //   '/perbaikan':(context) => Perbaikan(),
     //   '/home':(context) => Home(),
