@@ -27,9 +27,9 @@ void main() async {
       ),
       themeMode: ThemeMode.light, 
     initialRoute: '/dashboard',
-    // routes: {
+    routes: {
     //   '/homepage': (context) => HomePage(),
-    //   '/dashboard':(context) => Dashboard(),
+      '/dashboard':(context) => Dashboard(),
     //   '/login':(context) => Login(),
     //   '/signup':(context) => Signup(),
     //   '/forgot':(context) => ForgotPage(),
@@ -37,7 +37,7 @@ void main() async {
     //   '/home':(context) => Home(),
     //   '/pertanyaan':(context) => Pertanyaan(),
     //   '/history':(context) => History(),
-    // },
+    },
   ));
 }
 
