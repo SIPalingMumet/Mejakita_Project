@@ -28,15 +28,15 @@ void main() async {
       themeMode: ThemeMode.light, 
     initialRoute: '/dashboard',
     routes: {
-    //   '/homepage': (context) => HomePage(),
+      '/homepage': (context) => HomePage(),
       '/dashboard':(context) => Dashboard(),
       '/login':(context) => Login(),
       '/signup':(context) => Signup(),
       '/forgot':(context) => ForgotPage(),
-    //   '/perbaikan':(context) => Perbaikan(),
-    //   '/home':(context) => Home(),
-    //   '/pertanyaan':(context) => Pertanyaan(),
-    //   '/history':(context) => History(),
+      '/perbaikan':(context) => Perbaikan(),
+      '/home':(context) => Home(),
+      '/pertanyaan':(context) => Pertanyaan(),
+      '/history':(context) => History(),
     },
   ));
 }
