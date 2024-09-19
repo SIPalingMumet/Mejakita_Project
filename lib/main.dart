@@ -30,7 +30,7 @@ void main() async {
     routes: {
     //   '/homepage': (context) => HomePage(),
       '/dashboard':(context) => Dashboard(),
-    //   '/login':(context) => Login(),
+      '/login':(context) => Login(),
       '/signup':(context) => Signup(),
     //   '/forgot':(context) => ForgotPage(),
     //   '/perbaikan':(context) => Perbaikan(),
