@@ -32,7 +32,7 @@ void main() async {
       '/dashboard':(context) => Dashboard(),
       '/login':(context) => Login(),
       '/signup':(context) => Signup(),
-    //   '/forgot':(context) => ForgotPage(),
+      '/forgot':(context) => ForgotPage(),
     //   '/perbaikan':(context) => Perbaikan(),
     //   '/home':(context) => Home(),
     //   '/pertanyaan':(context) => Pertanyaan(),
