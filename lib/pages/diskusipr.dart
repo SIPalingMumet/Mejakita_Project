@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                 const SizedBox(height: 10),
                 DropdownButton<String>(
                   value: selectedTag.isEmpty ? null : selectedTag,
-                  hint: const Text('Pilih Tag'),
+                  hint: const Text('Pilih Filter'),
                   onChanged: (newValue) {
                     setState(() {
                       selectedTag = newValue!;
