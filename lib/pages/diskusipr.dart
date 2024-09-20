@@ -292,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                           ),
-                          child: Text('Upload'),
+                          child: const Text('Upload'),
                         ),
                       ),
                     ],
