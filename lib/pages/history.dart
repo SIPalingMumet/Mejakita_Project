@@ -27,7 +27,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     super.dispose();
   }
 
-  // Function to confirm delete
   void confirmDelete(int index) {
     showDialog(
       context: context,
@@ -43,7 +42,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           ),
           TextButton(
             onPressed: () {
-              hapusSoal(index);  // Perform delete
+              hapusSoal(index);  
               Navigator.pop(context);
             },
             child: Text('Hapus'),
@@ -53,10 +52,9 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     );
   }
 
-  // Function to delete the question/answer
   void hapusSoal(int index) {
     setState(() {
-      box.deleteAt(index); // Delete from Hive
+      box.deleteAt(index); 
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
@@ -64,7 +62,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     );
   }
 
-  // Function to build the question list with delete buttons
   Widget buildSoalList() {
     if (box.isEmpty) {
       return Center(
@@ -81,7 +78,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           margin: EdgeInsets.all(10),
           child: ListTile(
             title: Text(soalData['text'] ?? 'No Text Available'),
-            subtitle: Column(
+            subtitle: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 soalData['imagePath'] != null
@@ -92,7 +89,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         fit: BoxFit.cover,
                       )
                     : Text('No Image Available'),
-                SizedBox(height: 10),
+                SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -121,7 +118,6 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     );
   }
 
-  // Function to build the answered question list with delete buttons
   Widget buildAnsweredSoalList() {
     final List<Map> answeredSoals = [];
 
@@ -147,11 +143,11 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           margin: EdgeInsets.all(10),
           child: ListTile(
             title: Text(soalData['text'] ?? 'No Text Available'),
-            subtitle: Column(
+            subtitle: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Jumlah Jawaban: ${(soalData['answers'] as List).length}'),
-                SizedBox(height: 10),
+                SizedBox(width: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
