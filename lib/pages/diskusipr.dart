@@ -94,69 +94,74 @@ class _HomePageState extends State<HomePage> {
   }
 
   void tanyaSoal() {
-    resetInput();
-    showDialog(
-      context: context,
-      builder: (context) => StatefulBuilder(
-        builder: (context, setStateDialog) => AlertDialog(
-          backgroundColor: Colors.white,
-          title: const Text("Tanya Soal"),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: tSoal,
-                  decoration: const InputDecoration(hintText: 'Mau Tanya Apa?'),
-                ),
-                _image == null
-                    ? const Text("Tidak Ada Foto Yang Dipilih")
-                    : Image.file(_image!),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    pilihFoto();
-                    setStateDialog(() {});
-                  },
-                  child: const Text("Pilih Foto"),
-                ),
-                const SizedBox(height: 10),
-                DropdownButton<String>(
-                  value: selectedTag.isEmpty ? null : selectedTag,
-                  hint: const Text('Pilih Tag'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedTag = newValue!;
-                    });
-                    setStateDialog(() {});
-                  },
-                  items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
-                      .map((tag) => DropdownMenuItem<String>(
-                            value: tag,
-                            child: Text(tag),
-                          ))
-                      .toList(),
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            MaterialButton(
+  resetInput();
+  showDialog(
+    context: context,
+    builder: (context) => StatefulBuilder(
+      builder: (context, setStateDialog) => AlertDialog(
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text("Pertanyaan"),
+            IconButton(
+              icon: const Icon(Icons.close),
               onPressed: () {
                 Navigator.pop(context);
                 resetInput();
               },
-              child: const Text("Batal"),
-            ),
-            MaterialButton(
-              onPressed: simpanFoto,
-              child: const Text("Tanya"),
             ),
           ],
         ),
+        content: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: tSoal,
+                decoration: const InputDecoration(hintText: 'Tanya Soal Apa?'),
+              ),
+              _image == null
+                  ? const Text("Tidak Ada Foto Yang Dipilih")
+                  : Image.file(_image!),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () async {
+                  pilihFoto();
+                  setStateDialog(() {});
+                },
+                child: const Text("Pilih Foto"),
+              ),
+              const SizedBox(height: 10),
+              DropdownButton<String>(
+                value: selectedTag.isEmpty ? null : selectedTag,
+                hint: const Text('Pilih Tag'),
+                onChanged: (newValue) {
+                  setState(() {
+                    selectedTag = newValue!;
+                  });
+                  setStateDialog(() {});
+                },
+                items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
+                    .map((tag) => DropdownMenuItem<String>(
+                          value: tag,
+                          child: Text(tag),
+                        ))
+                    .toList(),
+              ),
+            ],
+          ),
+        ),
+        actions: [
+          MaterialButton(
+            onPressed: simpanFoto,
+            child: const Text("Tanya"),
+          ),
+        ],
       ),
-    );
-  }
+    ),
+  );
+}
 
   void applyFilter(String tag) {
     setState(() {
