@@ -94,74 +94,81 @@ class _HomePageState extends State<HomePage> {
   }
 
   void tanyaSoal() {
-  resetInput();
-  showDialog(
-    context: context,
-    builder: (context) => StatefulBuilder(
-      builder: (context, setStateDialog) => AlertDialog(
-        backgroundColor: Colors.white,
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            const Text("Pertanyaan"),
-            IconButton(
-              icon: const Icon(Icons.close),
-              onPressed: () {
-                Navigator.pop(context);
-                resetInput();
-              },
-            ),
-          ],
-        ),
-        content: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    resetInput();
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setStateDialog) => AlertDialog(
+          backgroundColor: Colors.white,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              TextField(
-                controller: tSoal,
-                decoration: const InputDecoration(hintText: 'Tanya Soal Apa?'),
-              ),
-              _image == null
-                  ? const Text("Tidak Ada Foto Yang Dipilih")
-                  : Image.file(_image!),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () async {
-                  pilihFoto();
-                  setStateDialog(() {});
+              const Text("Upload Pertanyaan"),
+              IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                  resetInput();
                 },
-                child: const Text("Pilih Foto"),
-              ),
-              const SizedBox(height: 10),
-              DropdownButton<String>(
-                value: selectedTag.isEmpty ? null : selectedTag,
-                hint: const Text('Pilih Tag'),
-                onChanged: (newValue) {
-                  setState(() {
-                    selectedTag = newValue!;
-                  });
-                  setStateDialog(() {});
-                },
-                items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
-                    .map((tag) => DropdownMenuItem<String>(
-                          value: tag,
-                          child: Text(tag),
-                        ))
-                    .toList(),
               ),
             ],
           ),
-        ),
-        actions: [
-          MaterialButton(
-            onPressed: simpanFoto,
-            child: const Text("Tanya"),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  controller: tSoal,
+                  decoration: const InputDecoration(hintText: 'Tulis Soal !'),
+                ),
+                _image == null
+                    ? const Text("No Was Image Picked")
+                    : Image.file(_image!),
+                const SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () async {
+                    pilihFoto();
+                    setStateDialog(() {});
+                  },
+                  child: const Text("Pick Foto"),
+                ),
+                const SizedBox(height: 10),
+                DropdownButton<String>(
+                  value: selectedTag.isEmpty ? null : selectedTag,
+                  hint: const Text('Pilih Tag'),
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedTag = newValue!;
+                    });
+                    setStateDialog(() {});
+                  },
+                  items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
+                      .map((tag) => DropdownMenuItem<String>(
+                            value: tag,
+                            child: Text(tag),
+                          ))
+                      .toList(),
+                ),
+              ],
+            ),
           ),
-        ],
+          actions: [
+            OutlinedButton(
+              onPressed: simpanFoto,
+              style: OutlinedButton.styleFrom(
+                side: BorderSide(
+                    color: Colors.green), 
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8.0), 
+                ),
+              ),
+              child: const Text("Upload"),
+            ),
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
   void applyFilter(String tag) {
     setState(() {
@@ -275,7 +282,8 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 60),
                         child: IconButton(
-                          icon: const Icon(Icons.photo_camera, color: Colors.grey),
+                          icon: const Icon(Icons.photo_camera,
+                              color: Colors.grey),
                           onPressed: () {
                             tanyaSoal();
                           },
@@ -397,7 +405,8 @@ class _HomePageState extends State<HomePage> {
                                         Expanded(
                                           child: Text(
                                             data['text'] ?? 'No Text Available',
-                                            style: const TextStyle(fontSize: 14),
+                                            style:
+                                                const TextStyle(fontSize: 14),
                                             softWrap: true,
                                             overflow: TextOverflow.visible,
                                           ),
@@ -449,32 +458,27 @@ class _HomePageState extends State<HomePage> {
                                                         color: Colors.black54),
                                                   ),
                                                 ),
-                                                SizedBox(width: 1,),
+                                                SizedBox(
+                                                  width: 1,
+                                                ),
                                                 Icon(
-                                                  Icons
-                                                      .camera_alt, 
+                                                  Icons.camera_alt,
                                                   color: Colors.black54,
                                                 ),
                                               ],
                                             ),
                                           ),
                                         ),
-                                        const SizedBox(
-                                            width:
-                                                10), 
+                                        const SizedBox(width: 10),
                                         Container(
                                           decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
-                                            color: Colors
-                                                .blue, 
+                                            color: Colors.blue,
                                           ),
                                           child: IconButton(
-                                            icon: const Icon(
-                                                Icons.send),
-                                            color: Colors
-                                                .white, 
-                                            onPressed: () {
-                                            },
+                                            icon: const Icon(Icons.send),
+                                            color: Colors.white,
+                                            onPressed: () {},
                                           ),
                                         ),
                                       ],
