@@ -62,6 +62,40 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     );
   }
 
+  void editSoal(int index) {
+    final soalData = box.getAt(index) as Map;
+    TextEditingController textController = TextEditingController(text: soalData['text']);
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Edit Soal'),
+        content: TextField(
+          controller: textController,
+          decoration: const InputDecoration(labelText: 'Soal'),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              setState(() {
+                soalData['text'] = textController.text;
+                box.putAt(index, soalData); // Update the item in Hive
+              });
+              Navigator.pop(context);
+            },
+            child: const Text('Simpan'),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget buildSoalList() {
     if (box.isEmpty) {
       return const Center(
@@ -91,27 +125,24 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                     : const Text('No Image Available'),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // Align to left
+                  mainAxisAlignment: MainAxisAlignment.start, 
                   children: [
+                    ElevatedButton(
+                      onPressed: () => editSoal(index), // Edit button
+                      child: const Text('Edit'),
+                    ),
+                    const SizedBox(width: 10),
                     ElevatedButton(
                       onPressed: () => confirmDelete(index),
                       child: const Text('Hapus'),
                     ),
-                    const Spacer(), // Push other content to the right (if any)
                   ],
                 ),
               ],
             ),
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailPage(
-                    index: index,
-                    questionData: soalData,
-                  ),
-                ),
-              );
+              // Edit on tap as well
+              editSoal(index);
             },
           ),
         );
@@ -150,18 +181,18 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                 Text('Jumlah Jawaban: ${(soalData['answers'] as List).length}'),
                 const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.start, // Align to left
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     ElevatedButton(
                       onPressed: () => confirmDelete(box.values.toList().indexOf(soalData)),
                       child: const Text('Hapus'),
                     ),
-                    const Spacer(), // Pushes other content to the right if needed
                   ],
                 ),
               ],
             ),
             onTap: () {
+              // Optionally, navigate to detail page or edit
               Navigator.push(
                 context,
                 MaterialPageRoute(
