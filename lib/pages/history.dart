@@ -31,21 +31,21 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Konfirmasi Hapus'),
-        content: Text('Apakah Anda yakin ingin menghapus item ini?'),
+        title: const Text('Konfirmasi Hapus'),
+        content: const Text('Apakah Anda yakin ingin menghapus item ini?'),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('Batal'),
+            child: const Text('Batal'),
           ),
           TextButton(
             onPressed: () {
               hapusSoal(index);  
               Navigator.pop(context);
             },
-            child: Text('Hapus'),
+            child: const Text('Hapus'),
           ),
         ],
       ),
@@ -58,13 +58,13 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Item berhasil dihapus')),
+      const SnackBar(content: Text('Item berhasil dihapus')),
     );
   }
 
   Widget buildSoalList() {
     if (box.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('Belum ada soal yang diunggah'),
       );
     }
@@ -75,10 +75,10 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         final soalData = box.getAt(index) as Map;
 
         return Card(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: ListTile(
             title: Text(soalData['text'] ?? 'No Text Available'),
-            subtitle: Row(
+            subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 soalData['imagePath'] != null
@@ -88,15 +88,16 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
                         width: 110,
                         fit: BoxFit.cover,
                       )
-                    : Text('No Image Available'),
-                SizedBox(width: 8),
+                    : const Text('No Image Available'),
+                const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start, // Align to left
                   children: [
                     ElevatedButton(
                       onPressed: () => confirmDelete(index),
-                      child: Text('Hapus'),
+                      child: const Text('Hapus'),
                     ),
+                    const Spacer(), // Push other content to the right (if any)
                   ],
                 ),
               ],
@@ -129,7 +130,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     }
 
     if (answeredSoals.isEmpty) {
-      return Center(
+      return const Center(
         child: Text('Belum ada jawaban'),
       );
     }
@@ -140,21 +141,22 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
         final soalData = answeredSoals[index];
 
         return Card(
-          margin: EdgeInsets.all(10),
+          margin: const EdgeInsets.all(10),
           child: ListTile(
             title: Text(soalData['text'] ?? 'No Text Available'),
-            subtitle: Row(
+            subtitle: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Jumlah Jawaban: ${(soalData['answers'] as List).length}'),
-                SizedBox(width: 8),
+                const SizedBox(height: 10),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.start, // Align to left
                   children: [
                     ElevatedButton(
                       onPressed: () => confirmDelete(box.values.toList().indexOf(soalData)),
-                      child: Text('Hapus'),
+                      child: const Text('Hapus'),
                     ),
+                    const Spacer(), // Pushes other content to the right if needed
                   ],
                 ),
               ],
@@ -181,12 +183,12 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text("History Diskusi PR"),
+        title: const Text("History Diskusi PR"),
         backgroundColor: Colors.white,
         elevation: 1, 
         bottom: TabBar(
@@ -194,7 +196,7 @@ class _HistoryState extends State<History> with SingleTickerProviderStateMixin {
           labelColor: Colors.black,
           unselectedLabelColor: Colors.grey,
           indicatorColor: Colors.black, 
-          tabs: [
+          tabs: const [
             Tab(text: 'Pertanyaan'),
             Tab(text: 'Jawaban'),
           ],

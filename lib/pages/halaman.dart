@@ -8,15 +8,15 @@ class Perbaikan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading:  IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/home');
                 },
               ),
               elevation: 0,
-       title: Text("Mejakita.com"),
+       title: const Text("Mejakita.com"),
       ),
-      body: Center(
+      body: const Center(
         child: Text("Oops Halaman dalam pengembangan silahkan kembali"),
       ),
     );

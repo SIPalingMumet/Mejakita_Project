@@ -18,8 +18,8 @@ class _HomeState extends State<Home> {
 
   final List<Widget> _pages = [
     Container(), 
-    Cartpage(), 
-    Profilepage(),
+    const Cartpage(), 
+    const Profilepage(),
   ];
 
   @override
@@ -28,8 +28,8 @@ class _HomeState extends State<Home> {
       appBar: _currentIndex == 0
           ? AppBar(
               leading: Image.asset('images/tole.png'),
-              title: Padding(
-                padding: const EdgeInsets.only(left: 8.0),
+              title: const Padding(
+                padding: EdgeInsets.only(left: 8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(right: 20),
+                          padding: EdgeInsets.only(right: 20),
                           child: Row(
                             children: [
                               Icon(Icons.money, color: Colors.yellow),
@@ -107,38 +107,38 @@ class _HomeState extends State<Home> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 10,),
+            const SizedBox(height: 10,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: const Color.fromARGB(255, 194, 194, 194)),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: Text(
+                child: const Text(
                   "-Nilai Min : ",
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
               ),
             ),
-            SizedBox(height: 20,),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0), 
+            const SizedBox(height: 20,),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0), 
               child: Text(
                 "Perkembangan UTBK",
                 style: TextStyle(fontSize: 24, fontFamily: 'Lato'),
               ),
             ),
-            SizedBox(height: 2,),
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
+            const SizedBox(height: 2,),
+            const Padding(
+              padding: EdgeInsets.only(left: 20.0),
               child: Text(
                 "Jan 1 - Des 31",
               ),
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             GestureDetector(
               onTapDown: (details) {
                 setState(() {
@@ -166,15 +166,15 @@ class _HomeState extends State<Home> {
                             borderRadius: BorderRadius.circular(8),
                           ),
                         ),
-                        SizedBox(height: 8),
-                        Text('#'),
+                        const SizedBox(height: 8),
+                        const Text('#'),
                       ],
                     );
                   }),
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: GridView.count(
@@ -183,12 +183,12 @@ class _HomeState extends State<Home> {
                 crossAxisSpacing: 10.0,
                 mainAxisSpacing: 10.0,
                 children: <Widget>[
-                  _buildMenuItem(Icons.book, 'UTBK', context, Perbaikan()),
-                  _buildMenuItem(Icons.subscriptions, 'Langganan', context, Perbaikan()),
-                  _buildMenuItem(Icons.chat, 'Diskusi', context,HomePage() ),
-                  _buildMenuItem(Icons.note, 'Catatan', context, Perbaikan()),
-                  _buildMenuItem(Icons.library_books, 'Materi', context, Perbaikan()),
-                  _buildMenuItem(Icons.calculate, 'Rumus', context, Perbaikan()),
+                  _buildMenuItem(Icons.book, 'UTBK', context, const Perbaikan()),
+                  _buildMenuItem(Icons.subscriptions, 'Langganan', context, const Perbaikan()),
+                  _buildMenuItem(Icons.chat, 'Diskusi', context,const HomePage() ),
+                  _buildMenuItem(Icons.note, 'Catatan', context, const Perbaikan()),
+                  _buildMenuItem(Icons.library_books, 'Materi', context, const Perbaikan()),
+                  _buildMenuItem(Icons.calculate, 'Rumus', context, const Perbaikan()),
                 ],
               ),
             ),
@@ -199,12 +199,12 @@ class _HomeState extends State<Home> {
             top: 160,
             left: _indicatorPosition - 20,
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(
                 color: Colors.green,
                 borderRadius: BorderRadius.circular(16),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Icon(
@@ -260,8 +260,8 @@ class _HomeState extends State<Home> {
             size: 50.0,
             color: Colors.blue,
           ),
-          SizedBox(height: 8.0),
-          Text(label, style: TextStyle(fontSize: 12.0)),
+          const SizedBox(height: 8.0),
+          Text(label, style: const TextStyle(fontSize: 12.0)),
         ],
       ),
     );

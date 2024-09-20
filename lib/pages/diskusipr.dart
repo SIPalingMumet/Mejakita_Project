@@ -7,7 +7,7 @@ import 'package:path/path.dart' as path;
 import 'jawaban.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
   void simpanFoto() async {
     if (tSoal.text.isEmpty || selectedTag.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Teks dan tag harus diisi!')),
+        const SnackBar(content: Text('Teks dan tag harus diisi!')),
       );
       return;
     }
@@ -75,14 +75,14 @@ class _HomePageState extends State<HomePage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Teks berhasil disimpan!')),
+        const SnackBar(content: Text('Teks berhasil disimpan!')),
       );
 
       Navigator.pop(context);
     } catch (e) {
       print('Gagal menyimpan teks: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Gagal menyimpan teks!')),
+        const SnackBar(content: Text('Gagal menyimpan teks!')),
       );
     }
   }
@@ -100,30 +100,30 @@ class _HomePageState extends State<HomePage> {
       builder: (context) => StatefulBuilder(
         builder: (context, setStateDialog) => AlertDialog(
           backgroundColor: Colors.white,
-          title: Text("Tanya Soal"),
+          title: const Text("Tanya Soal"),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
                   controller: tSoal,
-                  decoration: InputDecoration(hintText: 'Mau Tanya Apa?'),
+                  decoration: const InputDecoration(hintText: 'Mau Tanya Apa?'),
                 ),
                 _image == null
-                    ? Text("Tidak Ada Foto Yang Dipilih")
+                    ? const Text("Tidak Ada Foto Yang Dipilih")
                     : Image.file(_image!),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
                     pilihFoto();
                     setStateDialog(() {});
                   },
-                  child: Text("Pilih Foto"),
+                  child: const Text("Pilih Foto"),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 DropdownButton<String>(
                   value: selectedTag.isEmpty ? null : selectedTag,
-                  hint: Text('Pilih Tag'),
+                  hint: const Text('Pilih Tag'),
                   onChanged: (newValue) {
                     setState(() {
                       selectedTag = newValue!;
@@ -146,11 +146,11 @@ class _HomePageState extends State<HomePage> {
                 Navigator.pop(context);
                 resetInput();
               },
-              child: Text("Batal"),
+              child: const Text("Batal"),
             ),
             MaterialButton(
               onPressed: simpanFoto,
-              child: Text("Tanya"),
+              child: const Text("Tanya"),
             ),
           ],
         ),
@@ -184,10 +184,10 @@ class _HomePageState extends State<HomePage> {
         applyFilter(tag);
       },
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
         backgroundColor: isActive ? Colors.grey : Colors.blue,
       ),
-      child: Text(tag, style: TextStyle(color: Colors.white)),
+      child: Text(tag, style: const TextStyle(color: Colors.white)),
     );
   }
 
@@ -196,12 +196,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: Text("Diskusi PR"),
+        title: const Text("Diskusi PR"),
         backgroundColor: Colors.white,
         actions: [
           Padding(
@@ -210,26 +210,26 @@ class _HomePageState extends State<HomePage> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
-                  icon: Icon(Icons.history, color: Colors.black),
+                  icon: const Icon(Icons.history, color: Colors.black),
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/history');
                   },
                 ),
-                SizedBox(width: 4),
+                const SizedBox(width: 4),
                 IconButton(
-                  icon: Icon(Icons.person, color: Colors.black),
+                  icon: const Icon(Icons.person, color: Colors.black),
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/pertanyaan');
                   },
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
               ],
             ),
           ),
         ],
       ),
       body: Padding(
-        padding: EdgeInsets.all(10),
+        padding: const EdgeInsets.all(10),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -238,24 +238,24 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   Row(
                     children: [
-                      CircleAvatar(
+                      const CircleAvatar(
                         backgroundImage: AssetImage('images/tole.png'),
                         radius: 24,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Expanded(
                         child: TextButton(
                           onPressed: () {
                             tanyaSoal();
                           },
                           child: Container(
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 50),
                             decoration: BoxDecoration(
                               color: Colors.grey[200],
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            child: Text(
+                            child: const Text(
                               'Soal apa yang ingin kamu tanyain?',
                               style: TextStyle(color: Colors.black54),
                             ),
@@ -270,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 60),
                         child: IconButton(
-                          icon: Icon(Icons.photo_camera, color: Colors.grey),
+                          icon: const Icon(Icons.photo_camera, color: Colors.grey),
                           onPressed: () {
                             tanyaSoal();
                           },
@@ -282,20 +282,20 @@ class _HomePageState extends State<HomePage> {
                           onPressed: () {
                             tanyaSoal();
                           },
-                          child: Text('Upload'),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.green,
-                            padding: EdgeInsets.symmetric(
+                            padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
                           ),
+                          child: Text('Upload'),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Align(
+                  const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
                       'Filter berdasarkan:',
@@ -309,19 +309,19 @@ class _HomePageState extends State<HomePage> {
                     scrollDirection: Axis.horizontal,
                     child: Row(
                       children: [
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         buildFilterButton('Semua'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         buildFilterButton('Pelajaran'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         buildFilterButton('Non-pelajaran'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                         buildFilterButton('Peminatan'),
-                        SizedBox(width: 10),
+                        const SizedBox(width: 10),
                       ],
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ValueListenableBuilder(
                     valueListenable: box.listenable(),
                     builder: (context, Box box, _) {
@@ -335,7 +335,7 @@ class _HomePageState extends State<HomePage> {
 
                       return ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: filteredItems.length,
                         itemBuilder: (context, filteredIndex) {
                           final data = filteredItems[filteredIndex] as Map;
@@ -348,7 +348,7 @@ class _HomePageState extends State<HomePage> {
                             },
                             child: Card(
                               child: Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -360,13 +360,13 @@ class _HomePageState extends State<HomePage> {
                                           width: 40,
                                           fit: BoxFit.cover,
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           width: 6,
                                         ),
-                                        Text("User1"),
+                                        const Text("User1"),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Row(
@@ -384,28 +384,28 @@ class _HomePageState extends State<HomePage> {
                                                 height: 150,
                                                 width: 110,
                                                 color: Colors.grey[300],
-                                                child: Center(
+                                                child: const Center(
                                                     child: Text(
                                                         'No Image Available')),
                                               ),
-                                        SizedBox(width: 10),
+                                        const SizedBox(width: 10),
                                         Expanded(
                                           child: Text(
                                             data['text'] ?? 'No Text Available',
-                                            style: TextStyle(fontSize: 14),
+                                            style: const TextStyle(fontSize: 14),
                                             softWrap: true,
                                             overflow: TextOverflow.visible,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 6),
+                                    const SizedBox(height: 6),
                                     Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         IconButton(
-                                          icon: Icon(Icons.chat_bubble,
+                                          icon: const Icon(Icons.chat_bubble,
                                               color: Colors.grey),
                                           onPressed: () => navigateToDetailPage(
                                               originalIndex),
@@ -414,28 +414,28 @@ class _HomePageState extends State<HomePage> {
                                           data['tanggal'] != null
                                               ? '(${DateTime.parse(data['tanggal']).toLocal().toString().split(' ')[0]})'
                                               : '',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: Colors.grey,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 6,
                                     ),
                                     Row(
                                       children: [
                                         Expanded(
                                           child: Container(
-                                            padding: EdgeInsets.symmetric(
+                                            padding: const EdgeInsets.symmetric(
                                                 vertical: 10, horizontal: 60),
                                             decoration: BoxDecoration(
                                               color: Colors.grey[200],
                                               borderRadius:
                                                   BorderRadius.circular(20),
                                             ),
-                                            child: Row(
+                                            child: const Row(
                                               children: [
                                                 Expanded(
                                                   child: Text(
@@ -454,17 +454,17 @@ class _HomePageState extends State<HomePage> {
                                             ),
                                           ),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                             width:
                                                 10), 
                                         Container(
-                                          decoration: BoxDecoration(
+                                          decoration: const BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Colors
                                                 .blue, 
                                           ),
                                           child: IconButton(
-                                            icon: Icon(
+                                            icon: const Icon(
                                                 Icons.send),
                                             color: Colors
                                                 .white, 

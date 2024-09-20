@@ -12,13 +12,13 @@ class _SignupState extends State<Signup> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Stack(
           children: [
             AppBar(
               backgroundColor: Colors.greenAccent,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/dashboard');
                 },
@@ -39,9 +39,9 @@ class _SignupState extends State<Signup> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 15),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
+            const SizedBox(height: 15),
+            const Padding(
+              padding: EdgeInsets.only(left: 16),
               child: Text(
                 "Buat Akun Mejakita",
                 style: TextStyle(
@@ -51,9 +51,9 @@ class _SignupState extends State<Signup> {
                 ),
               ),
             ),
-            SizedBox(height: 6),
-            Padding(
-              padding: const EdgeInsets.only(left: 16),
+            const SizedBox(height: 6),
+            const Padding(
+              padding: EdgeInsets.only(left: 16),
               child: Text(
                 "Daftar Menggunakan Email Anda",
                 style: TextStyle(fontSize: 12),
@@ -63,7 +63,7 @@ class _SignupState extends State<Signup> {
               children: [
                 Flexible(
                   child: Padding(
-                    padding: EdgeInsets.only(left: 120),
+                    padding: const EdgeInsets.only(left: 120),
                     child: Image.asset(
                       'images/kitten.png',
                       fit: BoxFit.contain,
@@ -73,79 +73,79 @@ class _SignupState extends State<Signup> {
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: Colors.grey),
                   hintText: "Nama",
-                  prefixIcon: Icon(Icons.person, color: Colors.grey),
+                  prefixIcon: const Icon(Icons.person, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: Colors.grey),
                   hintText: "Email",
-                  prefixIcon: Icon(Icons.email_outlined, color: Colors.grey),
+                  prefixIcon: const Icon(Icons.email_outlined, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: Colors.grey),
                   hintText: "Password",
-                  prefixIcon: Icon(Icons.key, color: Colors.grey),
+                  prefixIcon: const Icon(Icons.key, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  labelStyle: TextStyle(color: Colors.grey),
+                  labelStyle: const TextStyle(color: Colors.grey),
                   hintText: "Ulangi Password",
-                  prefixIcon: Icon(Icons.key, color: Colors.grey),
+                  prefixIcon: const Icon(Icons.key, color: Colors.grey),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Container(
                 alignment: Alignment.center,
-                padding: EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(16.0),
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.grey),
                   borderRadius: BorderRadius.circular(5.0),
                 ),
-                child: Text(
+                child: const Text(
                   "reCAPTCHA Widget Placeholder",
                   style: TextStyle(fontSize: 16, color: Colors.grey),
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Center(
               child: ElevatedButton(
                 onPressed: () {
@@ -153,12 +153,12 @@ class _SignupState extends State<Signup> {
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
-                  padding: EdgeInsets.symmetric(horizontal: 140, vertical: 15),
+                  padding: const EdgeInsets.symmetric(horizontal: 140, vertical: 15),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20.0),
                   ),
                 ),
-                child: Text(
+                child: const Text(
                   "MASUK",
                   style: TextStyle(
                     fontSize: 16,
@@ -168,10 +168,10 @@ class _SignupState extends State<Signup> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            const SizedBox(height: 30),
             Row(
              children: [
-              Padding(padding: const EdgeInsets.only(left: 16),
+              const Padding(padding: EdgeInsets.only(left: 16),
               child: Text("Sudah Punya Akun?"),
               ),
               Padding(
@@ -180,7 +180,7 @@ class _SignupState extends State<Signup> {
                   onPressed: () {
                    Navigator.of(context).pushReplacementNamed('/login');
                   },
-                  child: Text(
+                  child: const Text(
                     "Login",
                     style: TextStyle(color: Colors.blue),
                   ),
@@ -188,7 +188,7 @@ class _SignupState extends State<Signup> {
               ),
             ],
             ),
-            SizedBox(height: 400,)
+            const SizedBox(height: 400,)
           ],
         ),
       ),

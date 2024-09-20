@@ -12,7 +12,7 @@ class _PertanyaanState extends State<Pertanyaan> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Flexible(
+        title: const Flexible(
           child: Text(
             "Pilihlah Bidang Yang Kamu Kuasai !",
             style: TextStyle(fontFamily: 'Lato', fontSize: 19),
@@ -30,17 +30,17 @@ class _PertanyaanState extends State<Pertanyaan> {
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/homepage');
                   },
-                  child: Text(
+                  child: const Text(
                     'LEWATI',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                SizedBox(width: 16),
+                const SizedBox(width: 16),
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pushReplacementNamed('/homepage');
                   },
-                  child: Text(
+                  child: const Text(
                     'SIMPAN',
                     style: TextStyle(color: Colors.black),
                   ),
@@ -50,7 +50,7 @@ class _PertanyaanState extends State<Pertanyaan> {
           ),
         ],
       ),
-      body: Center(
+      body: const Center(
         child: Text("Isi halaman pertanyaan di sini"),
       ),
     );

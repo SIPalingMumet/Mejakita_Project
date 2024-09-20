@@ -14,13 +14,13 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Stack(
           children: [
             AppBar(
               backgroundColor: Colors.greenAccent,
               leading: IconButton(
-                icon: Icon(Icons.arrow_back),
+                icon: const Icon(Icons.arrow_back),
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/dashboard');
                 },
@@ -40,9 +40,9 @@ class _LoginState extends State<Login> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 15),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0),
+          const SizedBox(height: 15),
+          const Padding(
+            padding: EdgeInsets.only(left: 16.0),
             child: Text(
               "Login Ke Mejakita",
               style: TextStyle(
@@ -52,43 +52,43 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          SizedBox(height: 6),
-          Padding(
-            padding: const EdgeInsets.only(left: 16),
+          const SizedBox(height: 6),
+          const Padding(
+            padding: EdgeInsets.only(left: 16),
             child: Text(
               "Masuk menggunakan akun mejakita",
               style: TextStyle(fontSize: 12),
             ),
           ),
-          SizedBox(height: 60),
+          const SizedBox(height: 60),
           Padding(
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: TextField(
               decoration: InputDecoration(
-                labelStyle: TextStyle(color: Colors.grey),
+                labelStyle: const TextStyle(color: Colors.grey),
                 hintText: "Email atau Username",
-                prefixIcon: Icon(Icons.email, color: Colors.grey),
+                prefixIcon: const Icon(Icons.email, color: Colors.grey),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Padding(
             padding: const EdgeInsets.only(left: 40, right: 40),
             child: TextField(
               decoration: InputDecoration(
-                labelStyle: TextStyle(color: Colors.grey),
+                labelStyle: const TextStyle(color: Colors.grey),
                 hintText: "Password",
-                prefixIcon: Icon(Icons.key, color: Colors.grey),
+                prefixIcon: const Icon(Icons.key, color: Colors.grey),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -104,7 +104,7 @@ class _LoginState extends State<Login> {
                         });
                       },
                     ),
-                    Text("Ingat Perangkat Ini"),
+                    const Text("Ingat Perangkat Ini"),
                   ],
                 ),
               ),
@@ -114,7 +114,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                    Navigator.of(context).pushReplacementNamed('/forgot');
                   },
-                  child: Text(
+                  child: const Text(
                     "Lupa Password?",
                     style: TextStyle(color: Colors.blue),
                   ),
@@ -122,7 +122,7 @@ class _LoginState extends State<Login> {
               ),
             ],
           ),
-          SizedBox(height: 40,),
+          const SizedBox(height: 40,),
        Center(
             child: ElevatedButton(
               onPressed: () {
@@ -131,12 +131,12 @@ class _LoginState extends State<Login> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple, 
-                padding: EdgeInsets.symmetric(horizontal: 140, vertical: 15), 
+                padding: const EdgeInsets.symmetric(horizontal: 140, vertical: 15), 
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0), 
                 ),
               ),
-              child: Text(
+              child: const Text(
                 "MASUK",
                 style: TextStyle(
                   fontSize: 16,
@@ -146,10 +146,10 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
-          SizedBox(height: 30,),
+          const SizedBox(height: 30,),
           Row(
             children: [
-              Padding(padding: const EdgeInsets.only(left: 16),
+              const Padding(padding: EdgeInsets.only(left: 16),
               child: Text("Belum Punya Akun?"),
               ),
               Padding(
@@ -158,7 +158,7 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                    Navigator.of(context).pushReplacementNamed('/signup');
                   },
-                  child: Text(
+                  child: const Text(
                     "Daftar Sekarang",
                     style: TextStyle(color: Colors.blue),
                   ),

@@ -40,7 +40,7 @@ class _DashboardState extends State<Dashboard> {
                     width: double.infinity,
                     fit: BoxFit.fill,
                   ),
-                  SizedBox(height: 160),
+                  const SizedBox(height: 160),
                   SizedBox(
                     height: 200,
                     child: PageView(
@@ -55,7 +55,7 @@ class _DashboardState extends State<Dashboard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Card Materi',
                                 style: TextStyle(color: Colors.white, fontSize: 24),
@@ -71,7 +71,7 @@ class _DashboardState extends State<Dashboard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Card Materi',
                                 style: TextStyle(color: Colors.white, fontSize: 24),
@@ -87,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15),
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Text(
                                 'Card UTBK',
                                 style: TextStyle(color: Colors.white, fontSize: 24),
@@ -98,7 +98,7 @@ class _DashboardState extends State<Dashboard> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
@@ -111,11 +111,11 @@ class _DashboardState extends State<Dashboard> {
                           backgroundColor: Colors.purple,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.purple, width: 2),
+                            side: const BorderSide(color: Colors.purple, width: 2),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         ),
-                        child: Text(
+                        child: const Text(
                           '  Login  ',
                           style: TextStyle(fontSize: 18),
                         ),
@@ -129,19 +129,19 @@ class _DashboardState extends State<Dashboard> {
                           backgroundColor: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30),
-                            side: BorderSide(color: Colors.purple, width: 2),
+                            side: const BorderSide(color: Colors.purple, width: 2),
                           ),
-                          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                          padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 15),
                         ),
-                        child: Text(
+                        child: const Text(
                           'Sign Up',
                           style: TextStyle(fontSize: 18),
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 400),
-                  Text(
+                  const SizedBox(height: 400),
+                  const Text(
                     'Copyright Mejakita.com@2021',
                     style: TextStyle(fontSize: 24),
                   ),
@@ -162,19 +162,19 @@ class _DashboardState extends State<Dashboard> {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Text(
+                        const Text(
                           'Join App Mejakita',
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: 30),
-                        Text(
+                        const SizedBox(height: 30),
+                        const Text(
                           'Ikuti Keseruan di aplikasi mejakita',
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         Image.asset(
                           'images/DB2.png',
                           fit: BoxFit.contain,

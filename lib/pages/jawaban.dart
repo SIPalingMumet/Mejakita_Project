@@ -8,10 +8,10 @@ class DetailPage extends StatefulWidget {
   final Map questionData;
 
   const DetailPage({
-    Key? key,
+    super.key,
     required this.index,
     required this.questionData,
-  }) : super(key: key);
+  });
 
   @override
   State<DetailPage> createState() => _DetailPageState();
@@ -42,7 +42,7 @@ class _DetailPageState extends State<DetailPage> {
   void simpanJawab() async {
     if (jSoal.text.isEmpty && _imageFile == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
             content:
                 Text('Jawaban tidak boleh kosong, masukkan teks atau gambar!')),
       );
@@ -52,7 +52,7 @@ class _DetailPageState extends State<DetailPage> {
     final soalJawab = jSoal.text;
     final newAnswer = {
       'jawab': soalJawab.isNotEmpty ? soalJawab : null,
-      'imagePath': _imageFile != null ? _imageFile!.path : null,
+      'imagePath': _imageFile?.path,
       'tanggal': DateTime.now().toString(),  
     };
 
@@ -67,7 +67,7 @@ class _DetailPageState extends State<DetailPage> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Berhasil mengirim jawaban')),
+      const SnackBar(content: Text('Berhasil mengirim jawaban')),
     );
   }
 
@@ -79,12 +79,12 @@ class _DetailPageState extends State<DetailPage> {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.chevron_left),
+          icon: const Icon(Icons.chevron_left),
           onPressed: () {
             Navigator.of(context).pushReplacementNamed('/homepage');
           },
         ),
-        title: Text('Diskusi PR'),
+        title: const Text('Diskusi PR'),
         backgroundColor: Colors.blue,
       ),
       body: Stack(
@@ -103,42 +103,42 @@ class _DetailPageState extends State<DetailPage> {
                         width: 40,
                         fit: BoxFit.cover,
                       ),
-                      SizedBox(width: 6),
-                      Text("User1"),
+                      const SizedBox(width: 6),
+                      const Text("User1"),
                     ],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   imagePath != null
                       ? Image.file(File(imagePath), height: 150, width: 150, fit: BoxFit.cover)
                       : Container(
                           height: 150,
                           width: 150,
                           color: Colors.grey[300],
-                          child: Center(
+                          child: const Center(
                             child: Text('No Image Available'),
                           ),
                         ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(
                     widget.questionData['text'] ?? 'No Text Available',
-                    style: TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Row(
                     children: [
                       IconButton(
-                        icon: Icon(Icons.chat_bubble, color: Colors.grey),
+                        icon: const Icon(Icons.chat_bubble, color: Colors.grey),
                         onPressed: () => {},
                       ),
                     ],
                   ),
-                  SizedBox(height: 10),
-                  Row(
+                  const SizedBox(height: 10),
+                  const Row(
                     children: [Text("Jawaban : ")],
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   answers.isEmpty
-                      ? Center(child: Text('Belum ada jawaban.'))
+                      ? const Center(child: Text('Belum ada jawaban.'))
                       : Column(
                           children: List.generate(answers.length, (index) {
                             final data = answers[index];
@@ -154,21 +154,21 @@ class _DetailPageState extends State<DetailPage> {
                                           height: 25,
                                           width: 25,
                                         ),
-                                        SizedBox(width: 6),
-                                        Text("User 1"),
-                                        SizedBox(width: 6),
+                                        const SizedBox(width: 6),
+                                        const Text("User 1"),
+                                        const SizedBox(width: 6),
                                         Text(
                                           data['tanggal'] != null
                                               ? '(${DateTime.parse(data['tanggal']).toLocal().toString().split(' ')[0]})'
                                               : '',
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 12,
                                             color: Colors.grey,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    SizedBox(height: 6),
+                                    const SizedBox(height: 6),
                                     if (data['jawab'] != null && data['jawab'].isNotEmpty)
                                       Text(data['jawab'] ?? ''),
                                     if (data['imagePath'] != null)
@@ -184,7 +184,7 @@ class _DetailPageState extends State<DetailPage> {
                             );
                           }),
                         ),
-                  SizedBox(height: 80), // Space to avoid overlap with the bottom row
+                  const SizedBox(height: 80), // Space to avoid overlap with the bottom row
                 ],
               ),
             ),
@@ -193,24 +193,24 @@ class _DetailPageState extends State<DetailPage> {
             alignment: Alignment.bottomLeft,
             child: Container(
               color: Colors.white,
-              padding: EdgeInsets.all(16.0),
+              padding: const EdgeInsets.all(16.0),
               child: Row(
                 children: [
                   Expanded(
                     child: TextField(
                       controller: jSoal,
-                      decoration: InputDecoration(hintText: 'Ketik Jawaban Kamu...'),
+                      decoration: const InputDecoration(hintText: 'Ketik Jawaban Kamu...'),
                     ),
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   IconButton(
-                    icon: Icon(Icons.camera, color: Colors.grey),
+                    icon: const Icon(Icons.camera, color: Colors.grey),
                     onPressed: _pickImage,
                   ),
-                  SizedBox(width: 10),
+                  const SizedBox(width: 10),
                   ElevatedButton(
                     onPressed: simpanJawab,
-                    child: Text('Jawab'),
+                    child: const Text('Jawab'),
                   ),
                 ],
               ),

@@ -12,7 +12,7 @@ class _ForgotPageState extends State<ForgotPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Stack(
           children: [
             AppBar(
@@ -33,26 +33,26 @@ class _ForgotPageState extends State<ForgotPage> {
     child: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(padding: const EdgeInsets.only(left: 30, right: 30),
+        const Padding(padding: EdgeInsets.only(left: 30, right: 30),
         child:Text(
           "Oops! Halaman dalam pengembangan silahkan kembali",
           style: TextStyle(fontSize: 19,
                 fontFamily: 'Lato',
                 fontWeight: FontWeight.w400,),
         ),),
-        SizedBox(height: 60),  
+        const SizedBox(height: 60),  
         ElevatedButton(
           onPressed: () {
             Navigator.of(context).pushReplacementNamed('/dashboard');
           },
           style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.greenAccent, 
-                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15), 
+                padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15), 
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0), 
                 ),
               ),
-          child: Text('Kembali',
+          child: const Text('Kembali',
           style: TextStyle(color: Colors.white)),
         ),
       ],
