@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _image = File(pickedFile.path);
       });
-      setStateDialog(() {}); // Refresh dialog setelah gambar dipilih
+      setStateDialog(() {}); 
     } else {
       print('Tidak Ada Foto Yang Dipilih');
     }
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         'text': soalText,
         'tag': selectedTag,
         'answers': [],
-        'tanggal': DateTime.now().toString(), // Simpan waktu saat soal dibuat
+        'tanggal': DateTime.now().toString(), 
       };
 
       setState(() {
@@ -118,17 +118,21 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
+                Row(
+
+                ),
+                SizedBox(height: 10,),
                 TextField(
                   controller: tSoal,
                   decoration: const InputDecoration(hintText: 'Tulis Soal !'),
                 ),
                 _image == null
                     ? const Text("No Image Was Picked")
-                    : Image.file(_image!), // Tampilkan gambar yang di-upload
+                    : Image.file(_image!), 
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    pilihFoto(setStateDialog); // Refresh dialog setelah memilih gambar
+                    pilihFoto(setStateDialog); 
                   },
                   child: const Text("Pick Foto"),
                 ),
@@ -140,7 +144,7 @@ class _HomePageState extends State<HomePage> {
                     setState(() {
                       selectedTag = newValue!;
                     });
-                    setStateDialog(() {}); // Perbarui dialog setelah memilih tag
+                    setStateDialog(() {}); 
                   },
                   items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
                       .map((tag) => DropdownMenuItem<String>(
