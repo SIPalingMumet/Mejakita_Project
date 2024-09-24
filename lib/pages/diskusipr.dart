@@ -28,16 +28,17 @@ class _HomePageState extends State<HomePage> {
     box = Hive.box('savedDataBox');
   }
 
-  void pilihFoto() async {
+  void pilihFoto(Function setStateDialog) async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
-    setState(() {
-      if (pickedFile != null) {
+    if (pickedFile != null) {
+      setState(() {
         _image = File(pickedFile.path);
-      } else {
-        print('Tidak Ada Foto Yang Dipilih');
-      }
-    });
+      });
+      setStateDialog(() {}); // Refresh dialog setelah gambar dipilih
+    } else {
+      print('Tidak Ada Foto Yang Dipilih');
+    }
   }
 
   void simpanFoto() async {
@@ -122,13 +123,12 @@ class _HomePageState extends State<HomePage> {
                   decoration: const InputDecoration(hintText: 'Tulis Soal !'),
                 ),
                 _image == null
-                    ? const Text("No Was Image Picked")
-                    : Image.file(_image!),
+                    ? const Text("No Image Was Picked")
+                    : Image.file(_image!), // Tampilkan gambar yang di-upload
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    pilihFoto();
-                    setStateDialog(() {});
+                    pilihFoto(setStateDialog); // Refresh dialog setelah memilih gambar
                   },
                   child: const Text("Pick Foto"),
                 ),
@@ -140,7 +140,7 @@ class _HomePageState extends State<HomePage> {
                     setState(() {
                       selectedTag = newValue!;
                     });
-                    setStateDialog(() {});
+                    setStateDialog(() {}); // Perbarui dialog setelah memilih tag
                   },
                   items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
                       .map((tag) => DropdownMenuItem<String>(
@@ -156,10 +156,9 @@ class _HomePageState extends State<HomePage> {
             OutlinedButton(
               onPressed: simpanFoto,
               style: OutlinedButton.styleFrom(
-                side: BorderSide(
-                    color: Colors.green), 
+                side: BorderSide(color: Colors.green),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0), 
+                  borderRadius: BorderRadius.circular(8.0),
                 ),
               ),
               child: const Text("Upload"),
@@ -282,8 +281,7 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 60),
                         child: IconButton(
-                          icon: const Icon(Icons.photo_camera,
-                              color: Colors.grey),
+                          icon: const Icon(Icons.photo_camera, color: Colors.grey),
                           onPressed: () {
                             tanyaSoal();
                           },
@@ -305,9 +303,7 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 20,
-                  ),
+                  const SizedBox(height: 20),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -338,152 +334,63 @@ class _HomePageState extends State<HomePage> {
                   ValueListenableBuilder(
                     valueListenable: box.listenable(),
                     builder: (context, Box box, _) {
-                      final items = box.values.toList();
-                      final filteredItems = filterTag.isEmpty
-                          ? items
-                          : items.where((item) {
-                              final data = item as Map;
-                              return data['tag'] == filterTag;
-                            }).toList();
+                      final List<dynamic> filteredData = box.values
+                          .where((data) =>
+                              filterTag.isEmpty || data['tag'] == filterTag)
+                          .toList();
+
+                      if (filteredData.isEmpty) {
+                        return const Padding(
+                          padding: EdgeInsets.only(top: 20),
+                          child: Center(
+                            child: Text(
+                              'Belum ada soal yang diajukan',
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        );
+                      }
 
                       return ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: filteredItems.length,
-                        itemBuilder: (context, filteredIndex) {
-                          final data = filteredItems[filteredIndex] as Map;
-                          final originalIndex = items.indexOf(
-                              data); // Mendefinisikan originalIndex di sini
-                          return InkWell(
-                            onTap: () {
-                              navigateToDetailPage(
-                                  originalIndex); // Navigasi dengan indeks asli
-                            },
-                            child: Card(
-                              child: Padding(
-                                padding: const EdgeInsets.all(10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Image.asset(
-                                          'images/tole.png',
-                                          height: 40,
-                                          width: 40,
-                                          fit: BoxFit.cover,
+                        itemCount: filteredData.length,
+                        itemBuilder: (context, index) {
+                          final soal = filteredData[index];
+                          final imagePath = soal['imagePath'] as String?;
+                          final soalText = soal['text'] as String;
+
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: GestureDetector(
+                              onTap: () {
+                                navigateToDetailPage(index);
+                              },
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                elevation: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        soalText,
+                                        style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
                                         ),
-                                        const SizedBox(
-                                          width: 6,
-                                        ),
-                                        const Text("User1"),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        data['imagePath'] != null
-                                            ? Image.file(
-                                                File(data['imagePath']),
-                                                height: 150,
-                                                width: 110,
-                                                fit: BoxFit.cover,
-                                              )
-                                            : Container(
-                                                height: 150,
-                                                width: 110,
-                                                color: Colors.grey[300],
-                                                child: const Center(
-                                                    child: Text(
-                                                        'No Image Available')),
-                                              ),
-                                        const SizedBox(width: 10),
-                                        Expanded(
-                                          child: Text(
-                                            data['text'] ?? 'No Text Available',
-                                            style:
-                                                const TextStyle(fontSize: 14),
-                                            softWrap: true,
-                                            overflow: TextOverflow.visible,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(height: 6),
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        IconButton(
-                                          icon: const Icon(Icons.chat_bubble,
-                                              color: Colors.grey),
-                                          onPressed: () => navigateToDetailPage(
-                                              originalIndex),
-                                        ),
-                                        Text(
-                                          data['tanggal'] != null
-                                              ? '(${DateTime.parse(data['tanggal']).toLocal().toString().split(' ')[0]})'
-                                              : '',
-                                          style: const TextStyle(
-                                            fontSize: 12,
-                                            color: Colors.grey,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 6,
-                                    ),
-                                    Row(
-                                      children: [
-                                        Expanded(
-                                          child: Container(
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 10, horizontal: 60),
-                                            decoration: BoxDecoration(
-                                              color: Colors.grey[200],
-                                              borderRadius:
-                                                  BorderRadius.circular(20),
-                                            ),
-                                            child: const Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Text(
-                                                    'Ketik Jawaban',
-                                                    style: TextStyle(
-                                                        color: Colors.black54),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 1,
-                                                ),
-                                                Icon(
-                                                  Icons.camera_alt,
-                                                  color: Colors.black54,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        const SizedBox(width: 10),
-                                        Container(
-                                          decoration: const BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.blue,
-                                          ),
-                                          child: IconButton(
-                                            icon: const Icon(Icons.send),
-                                            color: Colors.white,
-                                            onPressed: () {},
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                                      ),
+                                      const SizedBox(height: 5),
+                                      if (imagePath != null)
+                                        Image.file(File(imagePath)),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
