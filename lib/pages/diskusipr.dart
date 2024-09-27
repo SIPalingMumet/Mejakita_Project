@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _image = File(pickedFile.path);
       });
-      setStateDialog(() {}); 
+      setStateDialog(() {});
     } else {
       print('Tidak Ada Foto Yang Dipilih');
     }
@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> {
         'text': soalText,
         'tag': selectedTag,
         'answers': [],
-        'tanggal': DateTime.now().toString(), 
+        'tanggal': DateTime.now().toString(),
       };
 
       setState(() {
@@ -115,57 +115,100 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           content: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Row(
-
-                ),
-                const SizedBox(height: 10,),
-                TextField(
-                  controller: tSoal,
-                  decoration: const InputDecoration(hintText: 'Tulis Soal !'),
-                ),
-                _image == null
-                    ? const Text("No Image Was Picked")
-                    : Image.file(_image!), 
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () async {
-                    pilihFoto(setStateDialog); 
-                  },
-                  child: const Text("Pick Foto"),
-                ),
-                const SizedBox(height: 10),
-                DropdownButton<String>(
-                  value: selectedTag.isEmpty ? null : selectedTag,
-                  hint: const Text('Pilih Filter'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedTag = newValue!;
-                    });
-                    setStateDialog(() {}); 
-                  },
-                  items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
-                      .map((tag) => DropdownMenuItem<String>(
-                            value: tag,
-                            child: Text(tag),
-                          ))
-                      .toList(),
-                ),
-              ],
+            child: ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 400), // Batasi lebar dialog
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Row(
+                    children: [
+                      // Dropdown pertama
+                      Flexible(
+                        child: DropdownButtonFormField<String>(
+                          value: selectedTag.isEmpty ? null : selectedTag,
+                          hint: const Text('Kategori'),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 6),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(
+                                  color: Colors.blue, width: 2),
+                            ),
+                          ),
+                          onChanged: (newValue) {
+                            setState(() {
+                              selectedTag = newValue!;
+                            });
+                            setStateDialog(() {});
+                          },
+                          items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
+                              .map((tag) => DropdownMenuItem<String>(
+                                    value: tag,
+                                    child: Text(tag),
+                                  ))
+                              .toList(),
+                        ),
+                      ),
+                      const SizedBox(width: 6),
+                      // Dropdown kedua
+                      Flexible(
+                        child: DropdownButtonFormField<String>(
+                          value: null,
+                          hint: const Text('Mapel'),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(
+                                vertical: 5, horizontal: 6),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(12),
+                              borderSide: const BorderSide(
+                                  color: Colors.grey, width: 2),
+                            ),
+                          ),
+                          onChanged: null, // Tidak memiliki fungsi
+                          items: [],
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 10),
+                  TextField(
+                    controller: tSoal,
+                    decoration: const InputDecoration(
+                      hintText: 'Tulis Soal!',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  _image == null
+                      ? const Text("Tidak Ada Gambar")
+                      : Image.file(_image!),
+                  const SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: () async {
+                      pilihFoto(setStateDialog);
+                      setStateDialog(() {});
+                    },
+                    child: const Text("Pilih Foto"),
+                  ),
+                ],
+              ),
             ),
           ),
           actions: [
             OutlinedButton(
               onPressed: simpanFoto,
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.green),
+                backgroundColor: const Color.fromARGB(255, 65, 50, 231),
+                side: const BorderSide(color: Colors.blue),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
-              child: const Text("Upload"),
+              child: const Text(
+                "Upload",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -285,7 +328,8 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 60),
                         child: IconButton(
-                          icon: const Icon(Icons.photo_camera, color: Colors.grey),
+                          icon: const Icon(Icons.photo_camera,
+                              color: Colors.grey),
                           onPressed: () {
                             tanyaSoal();
                           },
@@ -381,7 +425,8 @@ class _HomePageState extends State<HomePage> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(10),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         soalText,
