@@ -76,14 +76,14 @@ class _HomePageState extends State<HomePage> {
       });
 
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Teks berhasil disimpan!')),
+        const SnackBar(content: Text('Soal berhasil disimpan!')),
       );
 
       Navigator.pop(context);
     } catch (e) {
       print('Gagal menyimpan teks: $e');
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Gagal menyimpan teks!')),
+        const SnackBar(content: Text('Gagal menyimpan Soal!')),
       );
     }
   }
@@ -118,10 +118,10 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Row(
+                const Row(
 
                 ),
-                SizedBox(height: 10,),
+                const SizedBox(height: 10,),
                 TextField(
                   controller: tSoal,
                   decoration: const InputDecoration(hintText: 'Tulis Soal !'),
@@ -160,7 +160,7 @@ class _HomePageState extends State<HomePage> {
             OutlinedButton(
               onPressed: simpanFoto,
               style: OutlinedButton.styleFrom(
-                side: BorderSide(color: Colors.green),
+                side: const BorderSide(color: Colors.green),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8.0),
                 ),
