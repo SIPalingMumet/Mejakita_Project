@@ -116,7 +116,8 @@ class _HomePageState extends State<HomePage> {
           ),
           content: SingleChildScrollView(
             child: ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 400), // Batasi lebar dialog
+              constraints:
+                  const BoxConstraints(maxWidth: 400), // Batasi lebar dialog
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
@@ -166,7 +167,7 @@ class _HomePageState extends State<HomePage> {
                             ),
                           ),
                           onChanged: null, // Tidak memiliki fungsi
-                          items: [],
+                          items: const [],
                         ),
                       ),
                     ],
@@ -407,39 +408,127 @@ class _HomePageState extends State<HomePage> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: filteredData.length,
                         itemBuilder: (context, index) {
-                          final soal = filteredData[index];
-                          final imagePath = soal['imagePath'] as String?;
-                          final soalText = soal['text'] as String;
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                navigateToDetailPage(index);
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                elevation: 2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        soalText,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                          final data = filteredData[index] as Map;
+                          return InkWell(
+                            onTap: () {
+                              navigateToDetailPage(index);
+                            },
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'images/tole.png',
+                                          height: 40,
+                                          width: 40,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      if (imagePath != null)
-                                        Image.file(File(imagePath)),
-                                    ],
-                                  ),
+                                        const SizedBox(width: 6),
+                                        const Text("User1"),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        data['imagePath'] != null
+                                            ? Image.file(
+                                                File(data['imagePath']),
+                                                height: 150,
+                                                width: 110,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(
+                                                height: 150,
+                                                width: 110,
+                                                color: Colors.grey[300],
+                                                child: const Center(
+                                                  child: Text(
+                                                      'No Image Available'),
+                                                ),
+                                              ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            data['text'] ?? 'No Text Available',
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                            softWrap: true,
+                                            overflow: TextOverflow.visible,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.chat_bubble,
+                                              color: Colors.grey),
+                                          onPressed: () =>
+                                              navigateToDetailPage(index),
+                                        ),
+                                        Text(
+                                          data['tanggal'] != null
+                                              ? '(${DateTime.parse(data['tanggal']).toLocal().toString().split(' ')[0]})'
+                                              : '',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 60),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: Row(
+                                              children: const [
+                                                Expanded(
+                                                  child: Text(
+                                                    'Ketik Jawaban',
+                                                    style: TextStyle(
+                                                        color: Colors.black54),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 1),
+                                                Icon(Icons.camera_alt,
+                                                    color: Colors.black54),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.blue,
+                                          ),
+                                          child: IconButton(
+                                            icon: const Icon(Icons.send),
+                                            color: Colors.white,
+                                            onPressed: () {},
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
