@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   final tSoal = TextEditingController();
   late Box box;
   String selectedTag = '';
+  String? selectedTingkat;
+  String? selectedMateri;
   String filterTag = '';
   String activeFilter = 'Semua';
 
@@ -94,6 +96,28 @@ class _HomePageState extends State<HomePage> {
     selectedTag = '';
   }
 
+  List<String> getMateriOptions(String? mapel, String? tingkat) {
+    if (mapel == null || tingkat == null) {
+      return [];
+    }
+
+    if (mapel == 'Fisika' && tingkat == 'SMP') {
+      return [' Gerak', 'Gaya', 'Energi'];
+    } else if (mapel == 'Fisika' && tingkat == 'SMA') {
+      return ['Kinematika', 'Dinamika', 'Hukum Newton'];
+    } else if (mapel == 'Matematika' && tingkat == 'SMP') {
+      return ['Aljabar', 'Geometri Dasar', 'Bilangan'];
+    } else if (mapel == 'Matematika' && tingkat == 'SMA') {
+      return ['Kalkulus', 'Trigonometri', 'Statistika'];
+    } else if (mapel == 'Kimia' && tingkat == 'SMP') {
+      return ['Zat dan Wujudnya', 'Perubahan Kimia', 'Asam dan Basa'];
+    } else if (mapel == 'Kimia' && tingkat == 'SMA') {
+      return ['Stoikiometri', 'Ikatan Kimia', 'Termokimia'];
+    }
+
+    return [];
+  }
+
   void tanyaSoal() {
     resetInput();
     showDialog(
@@ -123,23 +147,26 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: DropdownButtonFormField<String>(
                         value: selectedTag.isEmpty ? null : selectedTag,
-                        hint: const Text(' Kategori',style: TextStyle(fontSize: 16),),
+                        hint: const Text(' Mapel',
+                            style: TextStyle(fontSize: 16)),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 0.8),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                                color: Colors.blue, width: 2),
+                            borderSide:
+                                const BorderSide(color: Colors.blue, width: 2),
                           ),
                         ),
                         onChanged: (newValue) {
                           setState(() {
                             selectedTag = newValue!;
+                            selectedTingkat = null;
+                            selectedMateri = null;
                           });
                           setStateDialog(() {});
                         },
-                        items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
+                        items: ['Matematika', 'Fisika', 'Kimia']
                             .map((tag) => DropdownMenuItem<String>(
                                   value: tag,
                                   child: Text(tag),
@@ -150,39 +177,62 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(width: 6),
                     Expanded(
                       child: DropdownButtonFormField<String>(
-                        value: null,
-                        hint: const Text(' Tingkat',style: TextStyle(fontSize: 16),),
+                        value: selectedTingkat,
+                        hint: const Text(' Tingkat',
+                            style: TextStyle(fontSize: 16)),
                         decoration: InputDecoration(
                           contentPadding: const EdgeInsets.symmetric(
                               vertical: 5, horizontal: 1),
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 2),
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 2),
                           ),
                         ),
-                        onChanged: null, 
-                        items: const [],
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedTingkat = newValue!;
+                            selectedMateri =
+                                null; 
+                          });
+                          setStateDialog(() {});
+                        },
+                        items: ['SMP', 'SMA']
+                            .map((tingkat) => DropdownMenuItem<String>(
+                                  value: tingkat,
+                                  child: Text(tingkat),
+                                ))
+                            .toList(),
                       ),
                     ),
                   ],
                 ),
                 const SizedBox(height: 10),
                 DropdownButtonFormField<String>(
-                        value: null,
-                        hint: const Text(' Materi',style: TextStyle(fontSize: 16),),
-                        decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.symmetric(
-                              vertical: 5, horizontal: 6),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12),
-                            borderSide: const BorderSide(
-                                color: Colors.grey, width: 2),
-                          ),
-                        ),
-                        onChanged: null, 
-                        items: const [],
-                      ),
+                  value: selectedMateri,
+                  hint: const Text(' Materi', style: TextStyle(fontSize: 16)),
+                  decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 6),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2),
+                    ),
+                  ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedMateri = newValue!;
+                    });
+                    setStateDialog(() {});
+                  },
+                  items: getMateriOptions(selectedTag, selectedTingkat)
+                      .map((materi) => DropdownMenuItem<String>(
+                            value: materi,
+                            child: Text(materi),
+                          ))
+                      .toList(),
+                ),
                 const SizedBox(height: 10),
                 TextField(
                   controller: tSoal,
@@ -380,11 +430,11 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(width: 10),
                         buildFilterButton('Semua'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Pelajaran'),
+                        buildFilterButton('Matematika'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Non-pelajaran'),
+                        buildFilterButton('Fisika'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Peminatan'),
+                        buildFilterButton('Kimia'),
                         const SizedBox(width: 10),
                       ],
                     ),
