@@ -8,7 +8,6 @@ class Pertanyaan extends StatefulWidget {
 }
 
 class _PertanyaanState extends State<Pertanyaan> {
-  // Variabel untuk menyimpan pilihan yang dipilih
   String? selectedOption;
 
   @override
@@ -18,8 +17,8 @@ class _PertanyaanState extends State<Pertanyaan> {
         title: const Text(
           "Pilih bidang yang kamu kuasai!",
           style: TextStyle(
-            fontFamily: 'Lato', 
-            fontSize: 18, 
+            fontFamily: 'Lato',
+            fontSize: 18,
             fontWeight: FontWeight.bold,
           ),
           maxLines: 2,
@@ -57,15 +56,15 @@ class _PertanyaanState extends State<Pertanyaan> {
       ),
       body: ListView(
         children: [
-          const SizedBox(height: 10), 
-          buildOptionItem('[English] Pengetahuan Umum', 'images/eng.png', 'english'),
-          buildOptionItem('Pengetahuan Kuantitatif', 'images/jashin.jpg', 'kuantitatif'),
+          const SizedBox(height: 10),
+          buildOptionItem('[English] Pengetahuan Umum', Icons.language, 'english'),
+          buildOptionItem('Pengetahuan Kuantitatif', Icons.calculate, 'kuantitatif'),
         ],
       ),
     );
   }
 
-  Widget buildOptionItem(String title, String iconPath, String value) {
+  Widget buildOptionItem(String title, IconData icon, String value) {
     bool isSelected = selectedOption == value;
 
     return GestureDetector(
@@ -87,10 +86,9 @@ class _PertanyaanState extends State<Pertanyaan> {
         ),
         child: Row(
           children: [
-            Image.asset(
-              iconPath,
-              height: 35,
-              width: 35,
+            Icon(
+              icon,
+              size: 35,
               color: isSelected ? Colors.purple : Colors.grey,
             ),
             const SizedBox(width: 15),
