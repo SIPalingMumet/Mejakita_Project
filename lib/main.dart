@@ -26,7 +26,7 @@ void main() async {
         brightness: Brightness.dark, 
       ),
       themeMode: ThemeMode.light, 
-    initialRoute: '/dashboard',
+    initialRoute: '/homepage',
     debugShowCheckedModeBanner: false,
     routes: {
       '/homepage': (context) => const HomePage(),

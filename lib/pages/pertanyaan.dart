@@ -8,17 +8,22 @@ class Pertanyaan extends StatefulWidget {
 }
 
 class _PertanyaanState extends State<Pertanyaan> {
+  // Variabel untuk menyimpan pilihan yang dipilih
+  String? selectedOption;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Flexible(
-          child: Text(
-            "Pilihlah Bidang Yang Kamu Kuasai !",
-            style: TextStyle(fontFamily: 'Lato', fontSize: 19),
-            maxLines: 2, // Menentukan maksimal 2 baris
-            overflow: TextOverflow.ellipsis, // Memotong teks jika terlalu panjang
+        title: const Text(
+          "Pilih bidang yang kamu kuasai!",
+          style: TextStyle(
+            fontFamily: 'Lato', 
+            fontSize: 18, 
+            fontWeight: FontWeight.bold,
           ),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
         actions: [
           Padding(
@@ -32,7 +37,7 @@ class _PertanyaanState extends State<Pertanyaan> {
                   },
                   child: const Text(
                     'LEWATI',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.blue),
                   ),
                 ),
                 const SizedBox(width: 16),
@@ -42,7 +47,7 @@ class _PertanyaanState extends State<Pertanyaan> {
                   },
                   child: const Text(
                     'SIMPAN',
-                    style: TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.blue),
                   ),
                 ),
               ],
@@ -50,8 +55,62 @@ class _PertanyaanState extends State<Pertanyaan> {
           ),
         ],
       ),
-      body: const Center(
-        child: Text("Isi halaman pertanyaan di sini"),
+      body: ListView(
+        children: [
+          const SizedBox(height: 10), 
+          buildOptionItem('[English] Pengetahuan Umum', 'images/eng.png', 'english'),
+          buildOptionItem('Pengetahuan Kuantitatif', 'images/jashin.jpg', 'kuantitatif'),
+        ],
+      ),
+    );
+  }
+
+  Widget buildOptionItem(String title, String iconPath, String value) {
+    bool isSelected = selectedOption == value;
+
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          selectedOption = value;
+        });
+      },
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+        decoration: BoxDecoration(
+          color: isSelected ? Colors.purple.withOpacity(0.1) : Colors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: isSelected ? Colors.purple : Colors.grey.shade300,
+            width: 2,
+          ),
+        ),
+        child: Row(
+          children: [
+            Image.asset(
+              iconPath,
+              height: 35,
+              width: 35,
+              color: isSelected ? Colors.purple : Colors.grey,
+            ),
+            const SizedBox(width: 15),
+            Expanded(
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: 16,
+                  color: isSelected ? Colors.purple : Colors.black,
+                  fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                ),
+              ),
+            ),
+            if (isSelected)
+              const Icon(
+                Icons.check_circle,
+                color: Colors.purple,
+              ),
+          ],
+        ),
       ),
     );
   }
