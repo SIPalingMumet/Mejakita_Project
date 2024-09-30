@@ -168,6 +168,22 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                        value: null,
+                        hint: const Text(' Materi',style: TextStyle(fontSize: 16),),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 6),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide: const BorderSide(
+                                color: Colors.grey, width: 2),
+                          ),
+                        ),
+                        onChanged: null, 
+                        items: const [],
+                      ),
+                const SizedBox(height: 10),
                 TextField(
                   controller: tSoal,
                   decoration: const InputDecoration(
