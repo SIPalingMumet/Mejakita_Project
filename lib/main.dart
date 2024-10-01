@@ -27,7 +27,6 @@ void main() async {
       ),
       themeMode: ThemeMode.light, 
     initialRoute: '/dashboard',
-    debugShowCheckedModeBanner: false,
     routes: {
       '/homepage': (context) => const HomePage(),
       '/dashboard':(context) => const Dashboard(),

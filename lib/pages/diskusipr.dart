@@ -19,6 +19,8 @@ class _HomePageState extends State<HomePage> {
   final tSoal = TextEditingController();
   late Box box;
   String selectedTag = '';
+  String? selectedTingkat;
+  String? selectedMateri;
   String filterTag = '';
   String activeFilter = 'Semua';
 
@@ -35,7 +37,7 @@ class _HomePageState extends State<HomePage> {
       setState(() {
         _image = File(pickedFile.path);
       });
-      setStateDialog(() {}); 
+      setStateDialog(() {});
     } else {
       print('Tidak Ada Foto Yang Dipilih');
     }
@@ -65,7 +67,7 @@ class _HomePageState extends State<HomePage> {
         'text': soalText,
         'tag': selectedTag,
         'answers': [],
-        'tanggal': DateTime.now().toString(), 
+        'tanggal': DateTime.now().toString(),
       };
 
       setState(() {
@@ -94,6 +96,28 @@ class _HomePageState extends State<HomePage> {
     selectedTag = '';
   }
 
+  List<String> getMateriOptions(String? mapel, String? tingkat) {
+    if (mapel == null || tingkat == null) {
+      return [];
+    }
+
+    if (mapel == 'Fisika' && tingkat == 'SMP') {
+      return [' Gerak', 'Gaya', 'Energi'];
+    } else if (mapel == 'Fisika' && tingkat == 'SMA') {
+      return ['Kinematika', 'Dinamika', 'Hukum Newton'];
+    } else if (mapel == 'Matematika' && tingkat == 'SMP') {
+      return ['Aljabar', 'Geometri Dasar', 'Bilangan'];
+    } else if (mapel == 'Matematika' && tingkat == 'SMA') {
+      return ['Kalkulus', 'Trigonometri', 'Statistika'];
+    } else if (mapel == 'Kimia' && tingkat == 'SMP') {
+      return ['Zat dan Wujudnya', 'Perubahan Kimia', 'Asam dan Basa'];
+    } else if (mapel == 'Kimia' && tingkat == 'SMA') {
+      return ['Stoikiometri', 'Ikatan Kimia', 'Termokimia'];
+    }
+
+    return [];
+  }
+
   void tanyaSoal() {
     resetInput();
     showDialog(
@@ -118,40 +142,116 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Row(
-
+                Row(
+                  children: [
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: selectedTag.isEmpty ? null : selectedTag,
+                        hint: const Text(' Mapel',
+                            style: TextStyle(fontSize: 16)),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 0.8),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                const BorderSide(color: Colors.blue, width: 2),
+                          ),
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedTag = newValue!;
+                            selectedTingkat = null;
+                            selectedMateri = null;
+                          });
+                          setStateDialog(() {});
+                        },
+                        items: ['Matematika', 'Fisika', 'Kimia']
+                            .map((tag) => DropdownMenuItem<String>(
+                                  value: tag,
+                                  child: Text(tag),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                    const SizedBox(width: 6),
+                    Expanded(
+                      child: DropdownButtonFormField<String>(
+                        value: selectedTingkat,
+                        hint: const Text(' Tingkat',
+                            style: TextStyle(fontSize: 16)),
+                        decoration: InputDecoration(
+                          contentPadding: const EdgeInsets.symmetric(
+                              vertical: 5, horizontal: 1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12),
+                            borderSide:
+                                const BorderSide(color: Colors.grey, width: 2),
+                          ),
+                        ),
+                        onChanged: (newValue) {
+                          setState(() {
+                            selectedTingkat = newValue!;
+                            selectedMateri =
+                                null; 
+                          });
+                          setStateDialog(() {});
+                        },
+                        items: ['SMP', 'SMA']
+                            .map((tingkat) => DropdownMenuItem<String>(
+                                  value: tingkat,
+                                  child: Text(tingkat),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 10,),
+                const SizedBox(height: 10),
+                DropdownButtonFormField<String>(
+                  value: selectedMateri,
+                  hint: const Text(' Materi', style: TextStyle(fontSize: 16)),
+                  decoration: InputDecoration(
+                    contentPadding:
+                        const EdgeInsets.symmetric(vertical: 5, horizontal: 6),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2),
+                    ),
+                  ),
+                  onChanged: (newValue) {
+                    setState(() {
+                      selectedMateri = newValue!;
+                    });
+                    setStateDialog(() {});
+                  },
+                  items: getMateriOptions(selectedTag, selectedTingkat)
+                      .map((materi) => DropdownMenuItem<String>(
+                            value: materi,
+                            child: Text(materi),
+                          ))
+                      .toList(),
+                ),
+                const SizedBox(height: 10),
                 TextField(
                   controller: tSoal,
-                  decoration: const InputDecoration(hintText: 'Tulis Soal !'),
+                  decoration: const InputDecoration(
+                    hintText: 'Tulis Soal!',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
+                const SizedBox(height: 20),
                 _image == null
-                    ? const Text("No Image Was Picked")
-                    : Image.file(_image!), 
+                    ? const Text("Tidak Ada Gambar")
+                    : Image.file(_image!),
                 const SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () async {
-                    pilihFoto(setStateDialog); 
+                    pilihFoto(setStateDialog);
+                    setStateDialog(() {});
                   },
-                  child: const Text("Pick Foto"),
-                ),
-                const SizedBox(height: 10),
-                DropdownButton<String>(
-                  value: selectedTag.isEmpty ? null : selectedTag,
-                  hint: const Text('Pilih Filter'),
-                  onChanged: (newValue) {
-                    setState(() {
-                      selectedTag = newValue!;
-                    });
-                    setStateDialog(() {}); 
-                  },
-                  items: ['Pelajaran', 'Non-pelajaran', 'Peminatan']
-                      .map((tag) => DropdownMenuItem<String>(
-                            value: tag,
-                            child: Text(tag),
-                          ))
-                      .toList(),
+                  child: const Text("Pilih Foto"),
                 ),
               ],
             ),
@@ -160,12 +260,16 @@ class _HomePageState extends State<HomePage> {
             OutlinedButton(
               onPressed: simpanFoto,
               style: OutlinedButton.styleFrom(
-                side: const BorderSide(color: Colors.green),
+                backgroundColor: const Color.fromARGB(255, 65, 50, 231),
+                side: const BorderSide(color: Colors.blue),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
               ),
-              child: const Text("Upload"),
+              child: const Text(
+                "Upload",
+                style: TextStyle(color: Colors.white),
+              ),
             ),
           ],
         ),
@@ -285,7 +389,8 @@ class _HomePageState extends State<HomePage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 60),
                         child: IconButton(
-                          icon: const Icon(Icons.photo_camera, color: Colors.grey),
+                          icon: const Icon(Icons.photo_camera,
+                              color: Colors.grey),
                           onPressed: () {
                             tanyaSoal();
                           },
@@ -325,11 +430,11 @@ class _HomePageState extends State<HomePage> {
                         const SizedBox(width: 10),
                         buildFilterButton('Semua'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Pelajaran'),
+                        buildFilterButton('Matematika'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Non-pelajaran'),
+                        buildFilterButton('Fisika'),
                         const SizedBox(width: 10),
-                        buildFilterButton('Peminatan'),
+                        buildFilterButton('Kimia'),
                         const SizedBox(width: 10),
                       ],
                     ),
@@ -363,38 +468,127 @@ class _HomePageState extends State<HomePage> {
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: filteredData.length,
                         itemBuilder: (context, index) {
-                          final soal = filteredData[index];
-                          final imagePath = soal['imagePath'] as String?;
-                          final soalText = soal['text'] as String;
-
-                          return Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: GestureDetector(
-                              onTap: () {
-                                navigateToDetailPage(index);
-                              },
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                elevation: 2,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        soalText,
-                                        style: const TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
+                          final data = filteredData[index] as Map;
+                          return InkWell(
+                            onTap: () {
+                              navigateToDetailPage(index);
+                            },
+                            child: Card(
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Image.asset(
+                                          'images/tole.png',
+                                          height: 40,
+                                          width: 40,
+                                          fit: BoxFit.cover,
                                         ),
-                                      ),
-                                      const SizedBox(height: 5),
-                                      if (imagePath != null)
-                                        Image.file(File(imagePath)),
-                                    ],
-                                  ),
+                                        const SizedBox(width: 6),
+                                        const Text("User1"),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        data['imagePath'] != null
+                                            ? Image.file(
+                                                File(data['imagePath']),
+                                                height: 150,
+                                                width: 110,
+                                                fit: BoxFit.cover,
+                                              )
+                                            : Container(
+                                                height: 150,
+                                                width: 110,
+                                                color: Colors.grey[300],
+                                                child: const Center(
+                                                  child: Text(
+                                                      'No Image Available'),
+                                                ),
+                                              ),
+                                        const SizedBox(width: 10),
+                                        Expanded(
+                                          child: Text(
+                                            data['text'] ?? 'No Text Available',
+                                            style:
+                                                const TextStyle(fontSize: 14),
+                                            softWrap: true,
+                                            overflow: TextOverflow.visible,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        IconButton(
+                                          icon: const Icon(Icons.chat_bubble,
+                                              color: Colors.grey),
+                                          onPressed: () =>
+                                              navigateToDetailPage(index),
+                                        ),
+                                        Text(
+                                          data['tanggal'] != null
+                                              ? '(${DateTime.parse(data['tanggal']).toLocal().toString().split(' ')[0]})'
+                                              : '',
+                                          style: const TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 6),
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                          child: Container(
+                                            padding: const EdgeInsets.symmetric(
+                                                vertical: 10, horizontal: 60),
+                                            decoration: BoxDecoration(
+                                              color: Colors.grey[200],
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                            child: const Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Text(
+                                                    'Ketik Jawaban',
+                                                    style: TextStyle(
+                                                        color: Colors.black54),
+                                                  ),
+                                                ),
+                                                SizedBox(width: 1),
+                                                Icon(Icons.camera_alt,
+                                                    color: Colors.black54),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        const SizedBox(width: 10),
+                                        Container(
+                                          decoration: const BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: Colors.blue,
+                                          ),
+                                          child: IconButton(
+                                            icon: const Icon(Icons.send),
+                                            color: Colors.white,
+                                            onPressed: () {},
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
